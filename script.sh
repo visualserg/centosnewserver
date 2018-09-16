@@ -1,6 +1,6 @@
 #!/bin/sh
 echo "--> Updating CentOS System"
-yum -y update && yum install mc -y && yum install nano -y
+yum -y update && yum install mc -y && yum install nano -y && yum install git -y
 
 
 docker -s $1 &> /dev/null
