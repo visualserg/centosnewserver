@@ -3,16 +3,18 @@ echo "--> Updating CentOS System"
 yum -y update && yum install mc -y && yum install nano -y && yum install git -y
 
 
-docker -s $1 &> /dev/null
-if [ $? -eq 0 ]; then
-    echo "--> Install docker"
+pkg="docker"
+if yum list installed | grep $pkg > /dev/null
+then
+    echo "$pkg installed"
+else
+    echo "$pkg NOT installed"
 	curl -sS https://get.docker.com/ | sh
 	systemctl start docker
 	systemctl enable docker
 	systemctl status docker
-else
-	echo "Package already installed!"    
 fi
+
 
 
 echo "--> Install portainer"
