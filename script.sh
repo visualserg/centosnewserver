@@ -1,6 +1,7 @@
 #!/bin/sh
 echo "--> Updating CentOS System"
 yum -y update && yum install mc -y && yum install nano -y && yum install git -y
+timedatectl set-timezone Europe/Moscow
 
 
 pkg="docker"
