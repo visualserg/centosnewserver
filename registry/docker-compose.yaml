@@ -1,0 +1,33 @@
+version: '3.1'
+
+services:
+  registry:
+    restart: always
+    image: registry:latest
+    ports:
+      - 443:5000
+    environment:
+      REGISTRY_AUTH: htpasswd
+      REGISTRY_AUTH_HTPASSWD_REALM: Registry
+      REGISTRY_AUTH_HTPASSWD_PATH: /certs/auth/htpasswd
+      REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY: /data
+      REGISTRY_HTTP_TLS_CERTIFICATE: /certs/domain.crt
+      REGISTRY_HTTP_TLS_KEY: /certs/domain.key
+    volumes:
+      - /etc/letsencrypt/live/##########:/certs:ro
+      - ~/Docker/Registry/data:/data
+  app:
+    image: jc21/registry-ui:latest
+    ports:
+      - 8082:80
+    environment:
+      - REGISTRY_HOST=###host###:443
+      - REGISTRY_SSL=true
+      - REGISTRY_DOMAIN=###host###:443
+      #- REGISTRY_STORAGE_DELETE_ENABLED=
+      - REGISTRY_USER=###user###
+      - REGISTRY_PASS=###psw###
+    restart: always
+
+
+
